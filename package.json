@@ -1,5 +1,5 @@
 {
-  "name": "js-object-utils",
+  "name": "@idapgroup/js-object-utils",
   "version": "0.1.0",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
