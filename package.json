@@ -1,13 +1,16 @@
 {
-  "name": "js-object-utils",
+  "name": "@idapgroup/js-object-utils",
   "version": "0.1.0",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/oleg-yasenytsky/test",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idapgroup/js-object-utils"
+  },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/idapgroup"
   },
   "license": "MIT",
   "scripts": {
