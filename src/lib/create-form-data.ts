@@ -1,4 +1,5 @@
-import { CreateFormDataConfig, FormValue } from './types/create-form-data';
+import { CreateFormDataConfig, FormValue } from '../types/create-form-data';
+
 import { getKeyString } from './utils/get-key-string';
 
 /**
@@ -12,7 +13,13 @@ const fillFormData = (
   config: CreateFormDataConfig,
   formData: FormData
 ): void => {
-  const { keyPrefix, index, booleanMapper, allowNullableValues, allowEmptyValues } = config;
+  const {
+    keyPrefix,
+    index,
+    booleanMapper,
+    allowNullableValues,
+    allowEmptyValues,
+  } = config;
 
   if (value === undefined || value === null) {
     if (allowNullableValues && allowEmptyValues) {
@@ -44,8 +51,8 @@ const fillFormData = (
       });
     }
   } else {
-    const simpleValue =  value.toString();
-    if(simpleValue === '' && !allowEmptyValues){
+    const simpleValue = value.toString();
+    if (simpleValue === '' && !allowEmptyValues) {
       return;
     }
     formData.append(keyPrefix, simpleValue);
@@ -63,7 +70,6 @@ export const createFormData = (
   options?: Partial<CreateFormDataConfig>,
   existingFormData?: FormData
 ): FormData => {
-
   // create config from default and argument options
   const config = Object.assign(
     {

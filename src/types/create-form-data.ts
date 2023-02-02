@@ -4,7 +4,7 @@ type Value = PrimitiveTypes | Date | File | Blob;
 
 type ArrayFormValue = Array<Record<string, FormValue> | FormValue>;
 
-type FormValue =
+export type FormValue =
   | ArrayFormValue
   | Record<string, ArrayFormValue | Value>
   | Value;

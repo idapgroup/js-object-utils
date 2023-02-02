@@ -2,7 +2,8 @@ import {
   ArrayRecordType,
   CreateURLParamsConfig,
   RecordValue,
-} from './types/create-url-params';
+} from '../types/create-url-params';
+
 import { getKeyString } from './utils/get-key-string';
 
 export const createURLParams = (

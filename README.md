@@ -5,12 +5,12 @@ Javascript functions for transform or mutate object
 ## Installation
 
 ``` sh
-npm install js-object-utils
+npm install @idapgroup/js-object-utils
 ```
 or
 
 ```sh
-yarn add js-object-utils
+yarn add @idapgroup/js-object-utils
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ yarn add js-object-utils
 Serialize object to FormData instance.
 
 ```js
-import { createFormData } from 'js-object-utils';
+import { createFormData } from '@idapgroup/js-object-utils';
 
 const object = {
   /**
@@ -73,7 +73,7 @@ const formData = createFormData(
 Serialize object to object with key and primitive value.
 
 ```js
-import { createURLParams } from 'js-object-utils';
+import { createURLParams } from '@idapgroup/js-object-utils';
 
 const object = {
   /**

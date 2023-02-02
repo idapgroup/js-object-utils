@@ -1,22 +1,18 @@
 {
   "name": "@idapgroup/js-object-utils",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/idapgroup/js-object-utils"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/idapgroup"
+    "url": "https://github.com/idapgroup/js-object-utils.git"
   },
   "license": "MIT",
   "scripts": {
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
@@ -59,5 +55,16 @@
     "exclude": [
       "**/*.spec.js"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/idapgroup/js-object-utils/issues"
+  },
+  "homepage": "https://github.com/idapgroup/js-object-utils#readme",
+  "keywords": [
+    "formData",
+    "object to formData",
+    "object to url params",
+    "url params"
+  ],
+  "author": "idapgroup.com"
 }

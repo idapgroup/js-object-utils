@@ -1,0 +1,13 @@
+.idea
+.nyc_output
+node_modules
+coverage
+*.log
+package-lock.json
+test
+register.js
+.prettierignore
+.nycrc.json
+.mocharc.json
+.eslintrc.json
+.editorconfig
