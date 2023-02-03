@@ -137,10 +137,12 @@ describe('createFormData function', () => {
     expect(fd).to.have.been.equal(initial);
   });
   it('should be success with empty values', () => {
-    const fd = createFormData({name: ''}, {allowEmptyValues: true});
+    const fd = createFormData({name: '', products: []}, {allowEmptyValues: true});
     expect(fd.get(`name`)).to.have.been.equal('');
-    const fd2 = createFormData({name: ''}, {allowEmptyValues: false});
+    expect(fd.get(`products[]`)).to.have.been.equal('');
+    const fd2 = createFormData({name: '', products: []}, {allowEmptyValues: false});
     expect(fd2.has(`name`)).to.have.been.false;
+    expect(fd2.has(`products[]`)).to.have.been.false;
     const fd3 = createFormData({name: '', email: null}, {allowEmptyValues: true, allowNullableValues: true});
     expect(fd3.get(`name`)).to.have.been.equal('');
     expect(fd3.get(`email`)).to.have.been.equal('');

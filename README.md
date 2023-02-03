@@ -1,4 +1,4 @@
-# Js object utils
+# Js object utils [![NPM Module](https://img.shields.io/npm/v/@idapgroup/js-object-utils.svg)](https://www.npmjs.com/package/@idapgroup/js-object-utils)
 
 Javascript functions for transform or mutate object
 
@@ -49,7 +49,7 @@ const options = {
   booleanMapper: (val: boolean) => (val ? '1' : '0'),
 
   /**
-   * allow empty string
+   * allow empty string or array
    * defaults to false
    */
   allowEmptyValues: false,
