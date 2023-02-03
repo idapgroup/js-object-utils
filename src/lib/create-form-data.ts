@@ -18,7 +18,7 @@ const fillFormData = (
     index,
     booleanMapper,
     allowNullableValues,
-    allowEmptyValues,
+    allowEmptyValues
   } = config;
 
   if (value === undefined || value === null) {
@@ -30,13 +30,17 @@ const fillFormData = (
   } else if (value instanceof Date) {
     formData.append(keyPrefix, value.toISOString());
   } else if (Array.isArray(value)) {
-    value.forEach((item, index) => {
-      fillFormData(
-        item,
-        { ...config, keyPrefix: `${keyPrefix}[${index}]` },
-        formData
-      );
-    });
+    if (value.length === 0 && allowEmptyValues) {
+      formData.append(`${keyPrefix}[]`, '');
+    } else {
+      value.forEach((item, index) => {
+        fillFormData(
+          item,
+          { ...config, keyPrefix: `${keyPrefix}[${index}]` },
+          formData
+        );
+      });
+    }
   } else if (typeof value === 'object') {
     if (value instanceof File || value instanceof Blob) {
       formData.append(
@@ -77,7 +81,7 @@ export const createFormData = (
       index: null,
       booleanMapper: (val: boolean) => (val ? '1' : '0'),
       allowNullableValues: false,
-      allowEmptyValues: false,
+      allowEmptyValues: false
     },
     options || {}
   );
