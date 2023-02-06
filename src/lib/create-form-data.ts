@@ -18,7 +18,7 @@ const fillFormData = (
     index,
     booleanMapper,
     allowNullableValues,
-    allowEmptyValues
+    allowEmptyValues,
   } = config;
 
   if (value === undefined || value === null) {
@@ -81,7 +81,7 @@ export const createFormData = (
       index: null,
       booleanMapper: (val: boolean) => (val ? '1' : '0'),
       allowNullableValues: false,
-      allowEmptyValues: false
+      allowEmptyValues: false,
     },
     options || {}
   );

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es2015",
+    "module": "CommonJs",
+    "moduleResolution": "Node",
+    "lib": ["ES2015", "dom"],
+    "outDir": "./build/lib",
+  }
+}

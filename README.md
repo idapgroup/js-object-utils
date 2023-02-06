@@ -19,6 +19,8 @@ yarn add @idapgroup/js-object-utils
 
 Serialize object to FormData instance.
 
+[DEMO](https://stackblitz.com/edit/typescript-br9t3k?file=index.ts)
+
 ```js
 import { createFormData } from '@idapgroup/js-object-utils';
 
@@ -55,7 +57,7 @@ const options = {
   allowEmptyValues: false,
   
   /**
-   * allow nullable values, igonre if emptyValues not allow 
+   * allow nullable values, ignore if emptyValues not allow 
    * defaults to false
    */
   allowNullableValues: false,
@@ -71,6 +73,8 @@ const formData = createFormData(
 ### createURLParams
 
 Serialize object to object with key and primitive value.
+
+[DEMO](https://stackblitz.com/edit/typescript-1tpwga?file=index.ts)
 
 ```js
 import { createURLParams } from '@idapgroup/js-object-utils';
