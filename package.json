@@ -1,22 +1,31 @@
 {
   "name": "@idapgroup/js-object-utils",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
+  "exports": {
+    ".": {
+      "types": "./build/main/index.d.ts",
+      "es2015": "./build/lib/index.js",
+      "import": "./build/lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/idapgroup/js-object-utils.git"
   },
   "license": "MIT",
   "scripts": {
-    "build": "run-p build:*",
+    "build": "rm -rf build/ && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
+    "build:es-5": "tsc -p tsconfig-es5.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
-    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.spec.ts'"
+    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.spec.ts'",
+    "prepare": "yarn fix && yarn test && yarn build"
   },
   "engines": {
     "node": ">=10"
@@ -66,5 +75,5 @@
     "object to url params",
     "url params"
   ],
-  "author": "idapgroup.com"
+  "author": "idapgroup"
 }
