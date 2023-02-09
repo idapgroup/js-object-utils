@@ -2,10 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "es2015",
-    "module": "CommonJs",
-    "moduleResolution": "Node",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": ["ES2015", "dom"],
-    "outDir": "./build/lib",
+    "outDir": "./build/module",
   }
 }
