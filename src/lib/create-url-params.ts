@@ -1,67 +1,64 @@
 import {
-  ArrayRecordType,
-  CreateURLParamsConfig,
-  RecordValue,
+  CreateURLParamsConfig
 } from '../types/create-url-params';
 
 import { getKeyString } from './utils/get-key-string';
 
-export const createURLParams = (
-  value: Readonly<Record<string, RecordValue>> | ArrayRecordType,
+const defaultConfig: CreateURLParamsConfig = {
+  keyPrefix: '',
+  toString: false,
+  index: null,
+  booleanMapper: (val: boolean) => (val ? '1' : '0')
+};
+
+export const createURLParams = <T extends object>(
+  value: T | T[] | null | undefined,
   config?: Partial<CreateURLParamsConfig>
-): Record<string, RecordValue> => {
+): object => {
   const { keyPrefix, toString, index, booleanMapper }: CreateURLParamsConfig =
-    Object.assign(
-      {
-        keyPrefix: '',
-        toString: false,
-        index: null,
-        booleanMapper: (val: boolean) => (val ? '1' : '0'),
-      },
-      config || {}
-    );
+    Object.assign({ ...defaultConfig }, config || {});
 
   if (value === undefined || value === null) {
     return {};
   }
 
   if (Array.isArray(value)) {
-    return value.reduce((acc: Record<string, RecordValue>, curr, i) => {
+    return value.reduce((acc: object, curr, i) => {
       if (typeof curr === 'object') {
         return {
           ...acc,
           ...createURLParams(curr, {
             ...config,
             keyPrefix,
-            index: i,
-          }),
+            index: i
+          })
         };
       }
-      if (!keyPrefix) {
+      if (!keyPrefix || curr === null || curr === undefined) {
         return acc;
       }
       const value =
         typeof curr === 'boolean'
           ? booleanMapper(curr)
           : toString
-          ? String(curr)
-          : curr;
+            ? String(curr)
+            : curr;
       return { ...acc, [`${keyPrefix}[${i}]`]: value };
     }, {});
   }
 
   return Object.keys(value).reduce(
-    (acc: Record<string, RecordValue>, key: string) => {
+    (acc: object, key: string) => {
       const keyString = getKeyString(keyPrefix, key, index);
-      const item = value[key];
+      const item = value[key as keyof object];
 
       if (Array.isArray(item)) {
         return {
           ...acc,
           ...createURLParams(item, {
             ...config,
-            keyPrefix: keyString,
-          }),
+            keyPrefix: keyString
+          })
         };
       }
 
@@ -72,7 +69,7 @@ export const createURLParams = (
       if (item && typeof item === 'object') {
         return {
           ...acc,
-          ...createURLParams(item, { ...config, keyPrefix: keyString }),
+          ...createURLParams(item, { ...config, keyPrefix: keyString })
         };
       }
 

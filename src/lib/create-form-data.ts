@@ -1,4 +1,5 @@
-import { CreateFormDataConfig, FormValue } from '../types/create-form-data';
+import { CreateFormDataConfig } from '../types/create-form-data';
+import { PrimitiveTypes } from '../types/primitive-types';
 
 import { getKeyString } from './utils/get-key-string';
 
@@ -8,8 +9,8 @@ import { getKeyString } from './utils/get-key-string';
  * @param config - configuration object
  * @param formData - form data instance
  */
-const fillFormData = (
-  value: FormValue | Record<string, FormValue | Array<FormValue>>,
+const fillFormData = <T extends object>(
+  value: T | T[] | PrimitiveTypes,
   config: CreateFormDataConfig,
   formData: FormData
 ): void => {
@@ -42,49 +43,53 @@ const fillFormData = (
       });
     }
   } else if (typeof value === 'object') {
-    if (value instanceof File || value instanceof Blob) {
+    if (value instanceof File) {
       formData.append(
         keyPrefix,
         value,
-        'name' in value ? value.name : undefined
+        value.name
+      );
+    }
+    else if(value instanceof Blob){
+      formData.append(
+        keyPrefix,
+        value,
       );
     } else {
       Object.keys(value).forEach((key) => {
         const keyString = getKeyString(keyPrefix, key, index);
-        fillFormData(value[key], { ...config, keyPrefix: keyString }, formData);
+        fillFormData(value[key as keyof object], { ...config, keyPrefix: keyString }, formData);
       });
     }
   } else {
-    const simpleValue = value.toString();
-    if (simpleValue === '' && !allowEmptyValues) {
+    const primitiveValue = value.toString();
+    if (primitiveValue === '' && !allowEmptyValues) {
       return;
     }
-    formData.append(keyPrefix, simpleValue);
+    formData.append(keyPrefix, primitiveValue);
   }
 };
 
+const defaultConfig = {
+  keyPrefix: '',
+  index: null,
+  booleanMapper: (val: boolean) => (val ? '1' : '0'),
+  allowNullableValues: false,
+  allowEmptyValues: false,
+}
 /**
  *  fill form data recursive function
  * @param value - form value
  * @param options - configuration object
  * @param existingFormData - optional existing form data instance
  */
-export const createFormData = (
-  value: Record<string, FormValue> | FormData,
+export const createFormData = <T extends object>(
+  value: T | FormData,
   options?: Partial<CreateFormDataConfig>,
   existingFormData?: FormData
 ): FormData => {
   // create config from default and argument options
-  const config = Object.assign(
-    {
-      keyPrefix: '',
-      index: null,
-      booleanMapper: (val: boolean) => (val ? '1' : '0'),
-      allowNullableValues: false,
-      allowEmptyValues: false,
-    },
-    options || {}
-  );
+  const config = Object.assign({...defaultConfig},options || {});
 
   // return form data if value instanceof FormData
   if (value instanceof FormData) {
@@ -97,6 +102,6 @@ export const createFormData = (
   }
   // fill form data by form value and return
   const formData = existingFormData || new FormData();
-  fillFormData(value, config, formData);
+  fillFormData({...value}, config, formData);
   return formData;
 };
