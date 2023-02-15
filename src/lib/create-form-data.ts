@@ -44,21 +44,17 @@ const fillFormData = <T extends object>(
     }
   } else if (typeof value === 'object') {
     if (value instanceof File) {
-      formData.append(
-        keyPrefix,
-        value,
-        value.name
-      );
-    }
-    else if(value instanceof Blob){
-      formData.append(
-        keyPrefix,
-        value,
-      );
+      formData.append(keyPrefix, value, value.name);
+    } else if (value instanceof Blob) {
+      formData.append(keyPrefix, value);
     } else {
       Object.keys(value).forEach((key) => {
         const keyString = getKeyString(keyPrefix, key, index);
-        fillFormData(value[key as keyof object], { ...config, keyPrefix: keyString }, formData);
+        fillFormData(
+          value[key as keyof object],
+          { ...config, keyPrefix: keyString },
+          formData
+        );
       });
     }
   } else {
@@ -76,7 +72,7 @@ const defaultConfig = {
   booleanMapper: (val: boolean) => (val ? '1' : '0'),
   allowNullableValues: false,
   allowEmptyValues: false,
-}
+};
 /**
  *  fill form data recursive function
  * @param value - form value
@@ -89,7 +85,7 @@ export const createFormData = <T extends object>(
   existingFormData?: FormData
 ): FormData => {
   // create config from default and argument options
-  const config = Object.assign({...defaultConfig},options || {});
+  const config = Object.assign({ ...defaultConfig }, options || {});
 
   // return form data if value instanceof FormData
   if (value instanceof FormData) {
@@ -102,6 +98,6 @@ export const createFormData = <T extends object>(
   }
   // fill form data by form value and return
   const formData = existingFormData || new FormData();
-  fillFormData({...value}, config, formData);
+  fillFormData({ ...value }, config, formData);
   return formData;
 };
