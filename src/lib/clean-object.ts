@@ -1,8 +1,12 @@
-import { CleanObjectConfig, Record } from '../types/clean-object';
+import { CleanObjectConfig } from '../types/clean-object';
+
+import { isObject } from './is-object';
 
 const defaultConfig: CleanObjectConfig = {
   removeEmptyValues: false,
 };
+
+const isEmptyObject = (o: object) => Object.keys(o).length === 0;
 
 const needSkipValue = (
   value: unknown,
@@ -11,23 +15,27 @@ const needSkipValue = (
   if (value === null || value === undefined) {
     return true;
   }
-  if (typeof value !== 'string') {
-    return false;
+  if (removeEmptyValues) {
+    if (Array.isArray(value)) {
+      return value.length === 0;
+    }
+    if (typeof value === 'string') {
+      return !value;
+    }
+    if (isObject(value) && isEmptyObject(value)) {
+      return true;
+    }
   }
-  return value === '' && removeEmptyValues;
+  return false;
 };
 
-export const cleanObject = (
-  obj: Record,
+export const cleanObject = <T extends object>(
+  obj: T,
   config?: Partial<CleanObjectConfig>
-): Record => {
+): object => {
   const cfg = Object.assign({ ...defaultConfig }, config || {});
 
-  if (obj === null || obj === undefined) {
-    return {};
-  }
-
-  if (obj instanceof Blob || obj instanceof File || obj instanceof Date) {
+  if (!isObject(obj)) {
     return obj;
   }
 
@@ -39,11 +47,11 @@ export const cleanObject = (
 
   const keys = Object.keys(obj);
   if (!keys.length) {
-    return {};
+    return obj;
   }
 
-  return keys.reduce((acc: Record, key) => {
-    const item = obj[key];
+  return keys.reduce((acc: object, key) => {
+    const item = obj[key as keyof T];
     if (needSkipValue(item, cfg)) {
       return acc;
     }
@@ -51,10 +59,10 @@ export const cleanObject = (
       if (!item.length && cfg.removeEmptyValues) {
         return acc;
       }
-      const mapped = item.reduce((arr: Record[], curr) => {
-        if (typeof curr === 'object' && curr) {
+      const mapped = item.reduce((arr: object[], curr) => {
+        if (isObject(curr)) {
           const cleared = cleanObject(curr, cfg);
-          if (!Object.keys(cleared).length && cfg.removeEmptyValues) {
+          if (isEmptyObject(cleared) && cfg.removeEmptyValues) {
             return arr;
           }
           return [...arr, cleared];
@@ -65,9 +73,9 @@ export const cleanObject = (
       return { ...acc, [`${key}`]: mapped };
     }
 
-    if (typeof item === 'object' && item) {
-      const mapped = cleanObject(item as Record, cfg);
-      if (!Object.keys(mapped).length && cfg.removeEmptyValues) {
+    if (item && typeof item === 'object' && isObject(item)) {
+      const mapped = cleanObject(item, cfg);
+      if (isEmptyObject(mapped) && cfg.removeEmptyValues) {
         return acc;
       }
       return { ...acc, [`${key}`]: mapped };

@@ -9,10 +9,12 @@ use(deepEqualInAnyOrder);
 describe('cleanObject function', () => {
   it('should be success for simple values', () => {
     expect(cleanObject({})).to.deep.equal({});
-    expect(cleanObject(null)).to.deep.equal({});
+    expect(cleanObject(null)).to.deep.equal(null);
     const date = new Date();
     expect(cleanObject(date)).to.deep.equal(date);
     expect(cleanObject([])).to.deep.equal([]);
+    const str = new String('test');
+    expect(cleanObject(str)).to.deep.equal(str);
   });
 
   it('should be success for nullable values obj', () => {
@@ -27,7 +29,7 @@ describe('cleanObject function', () => {
         active: false,
         status: null,
         file,
-        previous: [],
+        previous: [[]],
         obj: {},
       },
       file,
@@ -41,7 +43,7 @@ describe('cleanObject function', () => {
       subscription: {
         active: false,
         file,
-        previous: [],
+        previous: [[]],
         obj: {},
       },
       file,
@@ -50,7 +52,7 @@ describe('cleanObject function', () => {
     };
     expect(cleanObject(obj)).to.deep.equal(expectedResult);
   });
-  it('should be success for empty string and array in obj', () => {
+  it('should be success with removeEmptyValues option', () => {
     const obj = {
       id: 1,
       name: 'test',

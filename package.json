@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf build/ && run-p build:*",
+    "build": "rimraf build/ && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
@@ -46,6 +46,7 @@
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "prettier": "^2.8.3",
+    "rimraf": "^4.1.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   },
@@ -66,7 +67,9 @@
     "formData",
     "object to formData",
     "object to url params",
-    "url params"
+    "url params",
+    "is object",
+    "clean object"
   ],
   "author": "idapgroup"
 }
