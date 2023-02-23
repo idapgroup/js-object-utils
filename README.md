@@ -153,6 +153,8 @@ const params = createURLParams(
 
 Remove nullable/empty values in object
 
+[DEMO](https://stackblitz.com/edit/typescript-hidjfj?file=index.html)
+
 <details>
   <summary>Options</summary>
 
