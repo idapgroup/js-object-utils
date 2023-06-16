@@ -1,4 +1,4 @@
-import {CleanObjectConfig, NonNullableFields} from '../types/clean-object';
+import { CleanObjectConfig, NonNullableFields } from '../types/clean-object';
 
 import { isObject } from './is-object';
 

@@ -35,41 +35,42 @@ export const createURLParams = <T extends Record<string, any>>(
         return acc;
       }
       const value =
-        typeof curr === 'boolean'
-          ? booleanMapper(curr)
-          : String(curr);
+        typeof curr === 'boolean' ? booleanMapper(curr) : String(curr);
       return { ...acc, [`${keyPrefix}[${i}]`]: value };
     }, {});
   }
 
-  return Object.keys(value).reduce((acc: Record<string, string>, key: string) => {
-    const keyString = getKeyString(keyPrefix, key, index);
-    const item = value[key as keyof Record<string, string>];
+  return Object.keys(value).reduce(
+    (acc: Record<string, string>, key: string) => {
+      const keyString = getKeyString(keyPrefix, key, index);
+      const item = value[key as keyof Record<string, string>];
 
-    if (Array.isArray(item)) {
-      return {
-        ...acc,
-        ...createURLParams(item, {
-          ...config,
-          keyPrefix: keyString,
-        }),
-      };
-    }
+      if (Array.isArray(item)) {
+        return {
+          ...acc,
+          ...createURLParams(item, {
+            ...config,
+            keyPrefix: keyString,
+          }),
+        };
+      }
 
-    if(item === null || item === undefined){
-      return acc;
-    }
+      if (item === null || item === undefined) {
+        return acc;
+      }
 
-    if (typeof item === 'boolean') {
-      return { ...acc, [`${keyString}`]: booleanMapper(item) };
-    }
+      if (typeof item === 'boolean') {
+        return { ...acc, [`${keyString}`]: booleanMapper(item) };
+      }
 
-    if (typeof item === 'object') {
-      return {
-        ...acc,
-        ...createURLParams(item, { ...config, keyPrefix: keyString }),
-      };
-    }
-    return { ...acc, [`${keyString}`]: String(item) };
-  }, {});
+      if (typeof item === 'object') {
+        return {
+          ...acc,
+          ...createURLParams(item, { ...config, keyPrefix: keyString }),
+        };
+      }
+      return { ...acc, [`${keyString}`]: String(item) };
+    },
+    {}
+  );
 };

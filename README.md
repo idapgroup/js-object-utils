@@ -117,12 +117,6 @@ Serialize object to object with key and primitive value.
     index: null,
   
     /**
-     * prefix index for form data key
-     * defaults to null
-     */
-    toString: null,
-  
-    /**
      * callback fn for convert true or false
      * defaults true or false to '1' or '0' respectively
      */
