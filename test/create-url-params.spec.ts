@@ -45,7 +45,7 @@ describe('createURLParams function', () => {
       hasSubscription: false,
       test: [true],
     };
-    expect(createURLParams(obj, {toString: true})).to.deep.equal({
+    expect(createURLParams(obj)).to.deep.equal({
       name: 'test',
       email: 'test@email.com',
       'additionalEmails[0]': 'test1@email.com',
@@ -66,7 +66,7 @@ describe('createURLParams function', () => {
 
   it('should be success with to string arg', () => {
     const obj = { name: 'test', email: 'test@email.com', age: 1 };
-    expect(createURLParams(obj, {toString: true})).to.deep.equal({
+    expect(createURLParams(obj)).to.deep.equal({
       name: 'test',
       email: 'test@email.com',
       age: '1'
@@ -75,7 +75,7 @@ describe('createURLParams function', () => {
 
   it('should be success with default parent arg', () => {
     const obj = { name: 'test', email: 'test@email.com', age: 1 };
-    expect(createURLParams(obj, {toString: true})).to.deep.equal({
+    expect(createURLParams(obj)).to.deep.equal({
       name: 'test',
       email: 'test@email.com',
       age: '1'
@@ -84,7 +84,7 @@ describe('createURLParams function', () => {
 
   it('should be success with default parent arg', () => {
     const obj = { name: 'test', email: 'test@email.com' };
-    expect(createURLParams(obj, {keyPrefix: 'parent', toString: true})).to.deep.equal({
+    expect(createURLParams(obj, {keyPrefix: 'parent'})).to.deep.equal({
       'parent[name]': 'test',
       'parent[email]': 'test@email.com'
     });
@@ -92,7 +92,7 @@ describe('createURLParams function', () => {
 
   it('should be success with default index arg', () => {
     const obj = { name: 'test', email: 'test@email.com' };
-    expect(createURLParams(obj, {keyPrefix: 'parent', toString: false, index:3})).to.deep.equal({
+    expect(createURLParams(obj, {keyPrefix: 'parent', index:3})).to.deep.equal({
       'parent[3][name]': 'test',
       'parent[3][email]': 'test@email.com'
     });
@@ -125,7 +125,7 @@ describe('createURLParams function', () => {
     expect(createURLParams(arr)).to.deep.equal({
       "code": "545",
       "phone": "55555",
-      "isConnectable": 1,
+      "isConnectable": "1",
       "socials[0]": "viber",
       "socials[1]": "telegram"
     });

@@ -9,7 +9,7 @@ import { getKeyString } from './utils/get-key-string';
  * @param config - configuration object
  * @param formData - form data instance
  */
-const fillFormData = <T extends object>(
+const fillFormData = <T extends Record<string, any>>(
   value: T | T[] | PrimitiveTypes,
   config: CreateFormDataConfig,
   formData: FormData
@@ -51,7 +51,7 @@ const fillFormData = <T extends object>(
       Object.keys(value).forEach((key) => {
         const keyString = getKeyString(keyPrefix, key, index);
         fillFormData(
-          value[key as keyof object],
+          value[key as keyof Record<string, any>],
           { ...config, keyPrefix: keyString },
           formData
         );
@@ -79,7 +79,7 @@ const defaultConfig = {
  * @param options - configuration object
  * @param existingFormData - optional existing form data instance
  */
-export const createFormData = <T extends object>(
+export const createFormData = <T extends Record<string, any>>(
   value: T | FormData,
   options?: Partial<CreateFormDataConfig>,
   existingFormData?: FormData
