@@ -1,4 +1,4 @@
-import { CleanObjectConfig } from '../types/clean-object';
+import {CleanObjectConfig, NonNullableFields} from '../types/clean-object';
 
 import { isObject } from './is-object';
 
@@ -6,7 +6,7 @@ const defaultConfig: CleanObjectConfig = {
   removeEmptyValues: false,
 };
 
-const isEmptyObject = (o: object) => Object.keys(o).length === 0;
+const isEmptyObject = (o: Record<string, any>) => Object.keys(o).length === 0;
 
 const needSkipValue = (
   value: unknown,
@@ -29,10 +29,10 @@ const needSkipValue = (
   return false;
 };
 
-export const cleanObject = <T extends object>(
+export const cleanObject = <T extends Record<string, any>>(
   obj: T,
   config?: Partial<CleanObjectConfig>
-): object => {
+): NonNullableFields<T> => {
   const cfg = Object.assign({ ...defaultConfig }, config || {});
 
   if (!isObject(obj)) {
@@ -50,7 +50,7 @@ export const cleanObject = <T extends object>(
     return obj;
   }
 
-  return keys.reduce((acc: object, key) => {
+  return keys.reduce((acc: Record<string, any>, key) => {
     const item = obj[key as keyof T];
     if (needSkipValue(item, cfg)) {
       return acc;
@@ -59,7 +59,7 @@ export const cleanObject = <T extends object>(
       if (!item.length && cfg.removeEmptyValues) {
         return acc;
       }
-      const mapped = item.reduce((arr: object[], curr) => {
+      const mapped = item.reduce((arr: Record<string, any>[], curr: any) => {
         if (isObject(curr)) {
           const cleared = cleanObject(curr, cfg);
           if (isEmptyObject(cleared) && cfg.removeEmptyValues) {
@@ -82,5 +82,5 @@ export const cleanObject = <T extends object>(
     }
 
     return { ...acc, [`${key}`]: item };
-  }, {});
+  }, {}) as NonNullableFields<T>;
 };
