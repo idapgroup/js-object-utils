@@ -24,7 +24,7 @@ import { isObject } from '@idapgroup/js-object-utils';
 
 const object = {
   /**
-   * key-value mapping
+   * key: value
    * values can be primitives or objects
    */
 };
@@ -81,7 +81,7 @@ import { createFormData } from '@idapgroup/js-object-utils';
 
 const object = {
   /**
-   * key-value mapping
+   * key: value
    * values can be primitives or objects
    */
 };
@@ -131,7 +131,7 @@ import { createURLParams } from '@idapgroup/js-object-utils';
 
 const object = {
   /**
-   * key-value mapping
+   * key: value
    * values can be primitives or objects
    */
 };
@@ -168,7 +168,7 @@ import { cleanObject } from '@idapgroup/js-object-utils';
 
 const object = {
   /**
-   * key-value mapping
+   * key: value
    * values can be primitives or objects
    */
 };
@@ -176,5 +176,24 @@ const object = {
 const obj = cleanObject(
   object, 
   options, // optional
+);
+```
+
+### keysToSnakeCase
+
+Transform object keys to snake case
+
+```js
+import { cleanObject } from '@idapgroup/keysToSnakeCase';
+
+const object = {
+  /**
+   * key: value
+   * values can be primitives or objects
+   */
+};
+
+const obj = keysToSnakeCase(
+  object
 );
 ```

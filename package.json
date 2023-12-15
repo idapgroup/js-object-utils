@@ -1,13 +1,13 @@
 {
   "name": "@idapgroup/js-object-utils",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
   "module": "build/module/index.js",
   "typings": "build/main/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/idapgroup/js-object-utils.git"
+    "url": "git+https://github.com/idapgroup/js-object-utils.git"
   },
   "license": "MIT",
   "scripts": {
