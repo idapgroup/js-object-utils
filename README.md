@@ -184,7 +184,7 @@ const obj = cleanObject(
 Transform object keys to snake case
 
 ```js
-import { cleanObject } from '@idapgroup/keysToSnakeCase';
+import { keysToSnakeCase } from '@idapgroup/keysToSnakeCase';
 
 const object = {
   /**
@@ -193,7 +193,5 @@ const object = {
    */
 };
 
-const obj = keysToSnakeCase(
-  object
-);
+const obj = keysToSnakeCase(object);
 ```
