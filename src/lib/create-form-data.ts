@@ -43,7 +43,7 @@ const fillFormData = <T extends Record<string, any>>(
       });
     }
   } else if (typeof value === 'object') {
-    if (value instanceof File) {
+    if (typeof  File !== 'undefined' &&  value instanceof File) {
       formData.append(keyPrefix, value, value.name);
     } else if (value instanceof Blob) {
       formData.append(keyPrefix, value);

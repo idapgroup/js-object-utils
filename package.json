@@ -1,6 +1,6 @@
 {
   "name": "@idapgroup/js-object-utils",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Javascript functions for transform or mutate object",
   "main": "build/main/index.js",
   "module": "build/module/index.js",
@@ -71,5 +71,8 @@
     "is object",
     "clean object"
   ],
-  "author": "idapgroup"
+  "author": "idapgroup",
+  "dependencies": {
+    "form-data": "^4.0.0"
+  }
 }
